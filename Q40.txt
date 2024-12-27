@@ -1,0 +1,39 @@
+# Load required libraries
+library(caret)
+library(e1071)
+library(rpart)
+
+# Create dataset
+data <- data.frame(
+  MaritalStatus = factor(c("married", "single", "divorced", "married", "single")),
+  Gender = factor(c("male", "female", "male", "female", "male")),
+  Age = factor(c("30-50", "18-30", "50-65", "65+", "18-30")),
+  Income = factor(c("25K-50K", "10K-25K", "50K-65K", "65K+", "10K-25K")),
+  CreditClass = factor(c("good", "bad", "good", "good", "bad"))
+)
+
+# Split the dataset into training and testing sets
+set.seed(123)
+index <- createDataPartition(data$CreditClass, p = 0.8, list = FALSE)
+train <- data[index, ]
+test <- data[-index, ]
+
+# Train Naïve Bayes Classifier
+nb_model <- naiveBayes(CreditClass ~ ., data = train)
+nb_pred <- predict(nb_model, test)
+
+# Train Decision Tree Classifier
+dt_model <- rpart(CreditClass ~ ., data = train, method = "class")
+dt_pred <- predict(dt_model, test, type = "class")
+
+# Evaluate Naïve Bayes
+nb_confusion <- confusionMatrix(nb_pred, test$CreditClass)
+cat("Naïve Bayes Confusion Matrix:\n")
+print(nb_confusion$table)
+cat("Naïve Bayes Accuracy:", nb_confusion$overall["Accuracy"], "\n")
+
+# Evaluate Decision Tree
+dt_confusion <- confusionMatrix(dt_pred, test$CreditClass)
+cat("Decision Tree Confusion Matrix:\n")
+print(dt_confusion$table)
+cat("Decision Tree Accuracy:", dt_confusion$overall["Accuracy"], "\n")

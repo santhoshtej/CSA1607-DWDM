@@ -1,0 +1,14 @@
+# Confusion Matrix
+actual <- c("No Wolf", "No Wolf", "Wolf", "Wolf")
+predicted <- c("Wolf", "Wolf", "No Wolf", "Wolf")
+
+# Create the matrix
+conf_matrix <- table(Predicted = predicted, Actual = actual)
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Output
+print("Confusion Matrix:")
+print(conf_matrix)
+cat("Accuracy:", accuracy, "\n")

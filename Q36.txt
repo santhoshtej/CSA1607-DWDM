@@ -1,0 +1,26 @@
+# Load required libraries
+library(RWeka)
+library(caret)
+
+# Load dataset
+data <- read.arff("dataset.arff")
+
+# Split data
+set.seed(123)
+index <- createDataPartition(data$Class, p = 0.7, list = FALSE)
+train <- data[index, ]
+test <- data[-index, ]
+
+# Naïve Bayes Classifier
+nb_model <- NaiveBayes(Class ~ ., data = train)
+nb_pred <- predict(nb_model, test)
+nb_confusion <- confusionMatrix(nb_pred$class, test$Class)
+
+# Decision Tree Classifier
+dt_model <- J48(Class ~ ., data = train)
+dt_pred <- predict(dt_model, test)
+dt_confusion <- confusionMatrix(dt_pred, test$Class)
+
+# Output metrics
+cat("Naïve Bayes Accuracy:", nb_confusion$overall["Accuracy"], "\n")
+cat("Decision Tree Accuracy:", dt_confusion$overall["Accuracy"], "\n")

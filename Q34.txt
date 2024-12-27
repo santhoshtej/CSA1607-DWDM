@@ -1,0 +1,13 @@
+# Simulated dataset
+age <- c(5, 10, 15, 20, 25, 30)
+tumor_size <- c(1, 2, 3, 5, 4, 6)
+inv_nodes <- c(2, 3, 1, 5, 4, 6)
+
+# Histogram
+hist(tumor_size, main = "Histogram of Tumor Sizes", xlab = "Tumor Size", col = "lightblue")
+
+# Scatterplot
+plot(age, tumor_size, main = "Scatterplot of Tumor Size vs Age", xlab = "Age", ylab = "Tumor Size", col = "red", pch = 16)
+
+# Boxplot
+boxplot(tumor_size, main = "Boxplot of Tumor Size", ylab = "Tumor Size", col = "lightgreen")
