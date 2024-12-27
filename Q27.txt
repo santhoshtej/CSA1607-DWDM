@@ -1,0 +1,14 @@
+# Load required library
+library(arules)
+
+# Read the transaction dataset
+data <- read.transactions("transactions.csv", format = "single", sep = ",", cols = c(1, 2))
+
+# Generate frequent itemsets using FP-Growth
+frequent_items <- eclat(data, parameter = list(supp = 0.5))
+
+# Generate association rules
+rules <- ruleInduction(frequent_items, data, confidence = 0.75)
+
+# View rules
+inspect(rules)

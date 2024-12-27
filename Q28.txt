@@ -1,0 +1,30 @@
+# Load required libraries
+library(caret)
+library(e1071)
+
+# Load the PIMA dataset
+data <- read.csv("diabetes.csv")
+
+# Split data into training and testing sets
+set.seed(123)
+index <- createDataPartition(data$Outcome, p = 0.7, list = FALSE)
+train <- data[index, ]
+test <- data[-index, ]
+
+# Train Decision Tree
+library(rpart)
+dt_model <- rpart(Outcome ~ ., data = train, method = "class")
+
+# Train SVM
+svm_model <- svm(Outcome ~ ., data = train, kernel = "linear", probability = TRUE)
+
+# Predictions
+dt_pred <- predict(dt_model, test, type = "class")
+svm_pred <- predict(svm_model, test, probability = TRUE)
+
+# Evaluate Performance
+dt_confusion <- confusionMatrix(dt_pred, test$Outcome)
+svm_confusion <- confusionMatrix(as.factor(ifelse(attr(svm_pred, "decision.values") > 0, 1, 0)), test$Outcome)
+
+cat("Decision Tree Accuracy:", dt_confusion$overall["Accuracy"], "\n")
+cat("SVM Accuracy:", svm_confusion$overall["Accuracy"], "\n")

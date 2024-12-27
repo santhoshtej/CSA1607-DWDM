@@ -1,0 +1,20 @@
+# Input data
+employee_data <- data.frame(
+  EmployeID = c(111, 222, 333, 444, 555, 666),
+  Gender = c("Male", "Male", "Female", "Female", "Female", "Male"),
+  Age = c(28, 25, 26, 25, 30, 29),
+  Salary = c(150000, 150000, 160000, 160000, 170000, 200000),
+  Credit = c(39, 27, 42, 40, 64, 72)
+)
+
+# Convert categorical data
+employee_data$Gender <- as.numeric(factor(employee_data$Gender))
+
+# K-Means clustering
+set.seed(123)
+kmeans_result <- kmeans(employee_data[, -1], centers = 2)
+
+# Visualize clusters
+plot(employee_data$Age, employee_data$Credit, col = kmeans_result$cluster,
+     pch = 16, main = "K-Means Clustering", xlab = "Age", ylab = "Credit")
+legend("topright", legend = paste("Cluster", 1:2), col = 1:2, pch = 16)

@@ -1,0 +1,16 @@
+# Input data
+persons <- c("Gopu", "Babu", "Baby", "Gopal", "Krishna", "Jai", "Dev", "Malini", "Hema", "Anu")
+vegetarian <- c("yes", "yes", "yes", "no", "yes", "no", "no", "yes", "yes", "yes")
+
+# Count vegetarians and non-vegetarians
+veg_count <- sum(vegetarian == "yes")
+non_veg_count <- sum(vegetarian == "no")
+
+# Output results
+cat("Vegetarians:", veg_count, "\n")
+cat("Non-Vegetarians:", non_veg_count, "\n")
+if (veg_count > non_veg_count) {
+  cat("Vegetarians are greater in count.\n")
+} else {
+  cat("Non-Vegetarians are greater in count.\n")
+}
